@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1630">
+  <meta name="description" content="SkyCast gives you current weather, useful telemetry, and a five-day forecast for cities around the world.">
+  <title>SkyCast — Weather, at a glance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body class="weather-default">
+  <div class="sky-glow" aria-hidden="true"></div>
+  <div class="app-shell">
+    <header class="topbar" id="top">
+      <a class="brand" href="#top" aria-label="SkyCast home"><span class="brand-symbol" aria-hidden="true"><span>☀</span><i></i></span><span>Sky<span>Cast</span><small>Weather, at a glance</small></span></a>
+      <div class="header-actions"><button class="location-button" id="location-button" type="button"><span aria-hidden="true">⌖</span> Use my location</button><button class="icon-button theme-toggle" type="button" aria-label="Switch to light theme" title="Switch theme"><span class="theme-glyph" aria-hidden="true">☼</span></button><span class="profile-avatar" aria-label="Guest profile">G</span></div>
+    </header>
+
+    <main class="main-content">
+      <section class="search-section" aria-labelledby="page-title">
+        <div class="search-heading"><p class="eyebrow"><span class="live-dot"></span> YOUR PERSONAL WEATHER DESK</p><h1 id="page-title">Find your <span>forecast.</span></h1><p>Real-time conditions and the days ahead, wherever you are.</p></div>
+        <form class="search-form" id="search-form" role="search" novalidate>
+          <label for="city-input" class="sr-only">Search by city name</label><span class="search-icon" aria-hidden="true">⌕</span><input id="city-input" name="city" type="search" placeholder="Search a city around the world..." autocomplete="off" aria-describedby="search-error"><button type="submit" class="search-button"><span class="search-button-label">Search</span><span class="search-button-icon" aria-hidden="true">→</span></button><span class="search-spinner" id="search-spinner" aria-hidden="true"></span>
+        </form>
+        <p class="search-error" id="search-error" role="alert" aria-live="polite"></p>
+        <div class="recent-searches" id="recent-searches" hidden><span class="recent-label">RECENT</span><div class="recent-list" id="recent-list"></div><button class="clear-history" id="clear-history" type="button">Clear</button></div>
+      </section>
+
+      <section class="welcome-card" id="welcome-card"><div class="welcome-icon" aria-hidden="true"><span>☁</span><b>☀</b></div><p class="eyebrow">A LITTLE CLARITY, EVERY DAY</p><h2>Weather made simple.</h2><p>Search a city to see the latest conditions, local details, and a five-day outlook.</p></section>
+
+      <section class="weather-results" id="weather-results" aria-live="polite" hidden>
+        <section class="current-card" aria-labelledby="city-name">
+          <div class="current-top"><div><p class="eyebrow">CURRENT CONDITIONS</p><h2 id="city-name">—</h2><p class="location-country" id="city-country"></p><p class="updated-time" id="updated-time"></p></div><div class="current-controls"><button class="icon-button unit-toggle" id="unit-toggle" type="button" aria-label="Switch to Fahrenheit" title="Switch temperature units"><span id="unit-label">°C</span></button><button class="icon-button refresh-button" id="refresh-button" type="button" aria-label="Refresh weather" title="Refresh weather"><span aria-hidden="true">↻</span></button></div></div>
+          <div class="current-main"><div class="weather-icon current-weather-icon" id="current-icon" role="img" aria-label="Current weather"></div><div class="temperature-wrap"><p class="temperature"><span id="current-temp">—</span><span class="unit-symbol" id="current-unit">°C</span></p><p class="condition" id="current-condition">—</p><p class="description" id="current-description">—</p></div></div>
+          <div class="temperature-range"><span>Feels like <strong id="feels-like">—</strong></span><span class="range-divider"></span><span>H <strong id="temp-high">—</strong></span><span>L <strong id="temp-low">—</strong></span></div>
+        </section>
+
+        <section class="telemetry-section" aria-labelledby="telemetry-title"><div class="section-heading"><div><p class="eyebrow">AT A GLANCE</p><h2 id="telemetry-title">Weather telemetry</h2></div><span class="section-side-note">Local conditions</span></div>
+          <div class="telemetry-grid">
+            <article class="telemetry-card"><div class="metric-top"><span class="metric-icon humidity-icon" aria-hidden="true">◌</span><span class="metric-label">HUMIDITY</span></div><p class="metric-value"><span id="humidity">—</span><small>%</small></p><p class="metric-note">Relative humidity</p></article>
+            <article class="telemetry-card"><div class="metric-top"><span class="metric-icon wind-icon" aria-hidden="true">≋</span><span class="metric-label">WIND SPEED</span></div><p class="metric-value"><span id="wind-speed">—</span><small>m/s</small></p><p class="metric-note">At the surface</p></article>
+            <article class="telemetry-card"><div class="metric-top"><span class="metric-icon pressure-icon" aria-hidden="true">↕</span><span class="metric-label">PRESSURE</span></div><p class="metric-value"><span id="pressure">—</span><small>hPa</small></p><p class="metric-note">Atmospheric pressure</p></article>
+            <article class="telemetry-card"><div class="metric-top"><span class="metric-icon visibility-icon" aria-hidden="true">◉</span><span class="metric-label">VISIBILITY</span></div><p class="metric-value"><span id="visibility">—</span><small>km</small></p><p class="metric-note">Horizontal visibility</p></article>
+            <article class="telemetry-card"><div class="metric-top"><span class="metric-icon sunrise-icon" aria-hidden="true">↗</span><span class="metric-label">SUNRISE</span></div><p class="metric-value"><span id="sunrise">—</span></p><p class="metric-note">Local time</p></article>
+            <article class="telemetry-card"><div class="metric-top"><span class="metric-icon sunset-icon" aria-hidden="true">↘</span><span class="metric-label">SUNSET</span></div><p class="metric-value"><span id="sunset">—</span></p><p class="metric-note">Local time</p></article>
+          </div>
+        </section>
+
+        <section class="forecast-section" aria-labelledby="forecast-title"><div class="section-heading"><div><p class="eyebrow">PLAN AHEAD</p><h2 id="forecast-title">5-day forecast</h2></div><span class="section-side-note">One outlook per day</span></div><div class="forecast-grid" id="forecast-grid"></div></section>
+      </section>
+
+      <footer class="page-footer"><span><span class="footer-mark">☀</span> SkyCast <span class="footer-divider">/</span> A little more prepared for whatever comes.</span><span>Weather data by OpenWeatherMap</span></footer>
+    </main>
+  </div>
+</body>
+</html>

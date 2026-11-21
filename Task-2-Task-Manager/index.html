@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1020">
+  <meta name="description" content="TaskFlow is a focused, local-first task manager and productivity tracker.">
+  <title>TaskFlow — Personal productivity</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="TaskFlow home"><span class="brand-icon" aria-hidden="true">✓</span><span>Task<span>Flow</span><small>Make room for what matters</small></span></a>
+      <div class="topbar-right"><p class="today-label"><span class="live-dot"></span><span id="current-date"></span></p><button class="icon-button theme-toggle" type="button" aria-label="Switch to light theme" title="Switch theme"><span class="theme-glyph" aria-hidden="true">☼</span></button><div class="profile" aria-label="Profile placeholder"><span class="avatar">A</span><span class="profile-copy"><strong>Welcome back</strong><small>Your workspace</small></span></div></div>
+    </header>
+
+    <main class="main-content" id="top">
+      <section class="welcome-row"><div><p class="eyebrow">YOUR PRODUCTIVITY SPACE</p><h1>Good things happen<br class="mobile-break"> <span>one task at a time.</span></h1><p class="welcome-copy">Capture your priorities, keep your focus, and make steady progress.</p></div><button class="button button-primary jump-add" type="button"><span aria-hidden="true">＋</span> Add a task</button></section>
+
+      <section class="stats-grid" aria-label="Task statistics">
+        <article class="stat-card"><span class="stat-icon total-icon" aria-hidden="true">▦</span><div><p>Total tasks</p><strong id="stat-total">0</strong><small>In your workspace</small></div><span class="stat-decoration" aria-hidden="true">01</span></article>
+        <article class="stat-card"><span class="stat-icon active-icon" aria-hidden="true">◷</span><div><p>Active tasks</p><strong id="stat-active">0</strong><small>Ready for your focus</small></div><span class="stat-decoration" aria-hidden="true">02</span></article>
+        <article class="stat-card"><span class="stat-icon completed-icon" aria-hidden="true">✓</span><div><p>Completed</p><strong id="stat-completed">0</strong><small>Progress you’ve made</small></div><span class="stat-decoration" aria-hidden="true">03</span></article>
+        <article class="stat-card"><span class="stat-icon overdue-icon" aria-hidden="true">!</span><div><p>Overdue</p><strong id="stat-overdue">0</strong><small>Past their due date</small></div><span class="stat-decoration" aria-hidden="true">04</span></article>
+      </section>
+
+      <section class="workspace-grid">
+        <aside class="form-panel" id="task-form-panel">
+          <div class="panel-heading"><div><p class="eyebrow">PLAN AHEAD</p><h2 id="form-heading">Create a task</h2></div><span class="heading-mark" aria-hidden="true">✳</span></div>
+          <p class="panel-intro">Give your next step a name and a place in your day.</p>
+          <form id="task-form" novalidate>
+            <label for="task-title">Task title <span class="required">*</span></label><input id="task-title" name="title" maxlength="100" placeholder="e.g. Prepare project outline" required autocomplete="off"><span class="field-error" id="title-error"></span>
+            <label for="task-description">Description <span class="optional">Optional</span></label><textarea id="task-description" name="description" rows="3" maxlength="500" placeholder="Add a few details to help you get started"></textarea>
+            <div class="form-two"><div><label for="task-category">Category <span class="required">*</span></label><select id="task-category" name="category" required><option value="">Choose one</option><option value="Work">Work</option><option value="Personal">Personal</option><option value="Study">Study</option></select><span class="field-error" id="category-error"></span></div><div><label for="task-priority">Priority</label><select id="task-priority" name="priority"><option value="Low">Low</option><option value="Medium" selected>Medium</option><option value="High">High</option></select></div></div>
+            <label for="task-due-date">Due date <span class="required">*</span></label><input id="task-due-date" name="dueDate" type="date" required><span class="field-error" id="date-error"></span>
+            <div class="form-actions"><button class="button button-primary submit-button" id="submit-task" type="submit">Add task <span aria-hidden="true">→</span></button><button class="text-button cancel-edit" id="cancel-edit" type="button" hidden>Cancel edit</button></div>
+            <p class="form-footnote"><span aria-hidden="true">◉</span> Your tasks are saved on this device.</p>
+          </form>
+        </aside>
+
+        <section class="task-panel" aria-labelledby="tasks-heading">
+          <div class="task-panel-top"><div><p class="eyebrow">YOUR TASKS</p><h2 id="tasks-heading">Task board <span class="count-pill" id="visible-count">0</span></h2></div><button class="text-button clear-completed" id="clear-completed" type="button">Clear completed</button></div>
+          <div class="toolbar"><label class="search-box"><span aria-hidden="true">⌕</span><input id="task-search" type="search" placeholder="Search tasks..." aria-label="Search by title, description, or category"><kbd>⌘ K</kbd></label><label class="select-filter"><span class="sr-only">Filter by category</span><select id="category-filter"><option value="all">All categories</option><option value="Work">Work</option><option value="Personal">Personal</option><option value="Study">Study</option></select><span aria-hidden="true">⌄</span></label></div>
+          <div class="status-filters" role="group" aria-label="Filter tasks by status"><button class="filter-chip selected" type="button" data-status="all" aria-pressed="true">All tasks <span id="filter-all-count">0</span></button><button class="filter-chip" type="button" data-status="active" aria-pressed="false">Active <span id="filter-active-count">0</span></button><button class="filter-chip" type="button" data-status="completed" aria-pressed="false">Completed <span id="filter-completed-count">0</span></button></div>
+          <div class="task-list" id="task-list" aria-live="polite"></div>
+          <div class="empty-state" id="empty-state"><div class="empty-art" aria-hidden="true"><span>✓</span><i></i><b></b></div><h3 id="empty-title">A fresh start.</h3><p id="empty-message">Add a task to turn your plans into progress.</p><button class="button button-secondary empty-add" type="button">Create your first task <span aria-hidden="true">→</span></button></div>
+          <p class="drag-hint" id="drag-hint"><span aria-hidden="true">⠿</span> Tip: drag a task card to change its order</p>
+        </section>
+      </section>
+      <footer class="page-footer"><span><span class="footer-mark">✳</span> TaskFlow <span class="footer-divider">/</span> A calmer way to get things done.</span><span id="storage-status">Stored locally on this device</span></footer>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
